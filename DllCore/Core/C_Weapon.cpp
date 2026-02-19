@@ -194,10 +194,10 @@ namespace RA3::Core {
 	#endif
 	}
 
-	void __fastcall C_WeaponTemplate_SetAttackPositionToRangeCPP(pC_WeaponTemplate pIn, PBYTE pESI, float* targetPos)
+	void __fastcall C_WeaponTemplate_SetAttackPositionToRangeCPP(pC_WeaponTemplate pIn, pWeaponFireInStack pFire, float* targetPos)
 	{
-		auto pGameObject = *(pC_GameObject*)(pESI + 4);
-		auto pTargetPos = *(float**)(pESI + 0x2C); // used to set FX's target position
+		auto pGameObject = pFire->pSelf;
+		auto pTargetPos = pFire->realTargetPos; // used to set FX's target position
 
 		__m128 v_selfPos = _mm_loadu_ps(pGameObject->Position);
 		__m128 v_targetPos = _mm_loadu_ps(pTargetPos);
@@ -239,6 +239,7 @@ namespace RA3::Core {
 			targetPos[2] = v_attackPos.m128_f32[2];
 			pTargetPos[2] = v_attackPos.m128_f32[2];
 		}
+		pFire->pTarget = 0;
 	}
 
 	__declspec(naked) void __fastcall C_WeaponTemplate_FireNuggetsASM()
@@ -604,7 +605,7 @@ namespace RA3::Core {
 		}
 
 		__m128 v_pos = _mm_loadu_ps(pOutPos);
-		v_pos = _mm_min_ps(v_pos, _mm_set_ps1(9900.0f));
+		v_pos = _mm_min_ps(v_pos, _mm_set_ps1(9999.0f));
 		outPos[0] = v_pos.m128_f32[0];
 		outPos[1] = v_pos.m128_f32[1];
 		outPos[2] = v_pos.m128_f32[2];

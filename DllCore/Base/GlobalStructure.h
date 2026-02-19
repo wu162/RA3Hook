@@ -1,5 +1,11 @@
 #pragma once
 
+typedef struct G_GameObjectNode_t {
+	int ObjectID;
+	void* pGameObject;
+	G_GameObjectNode_t* next;
+}*pGameObjectNode;
+
 // size is 0x320, create in 004FFCF0
 // pointer is 00CD8CE4 
 typedef struct G_GameSystem_t {
@@ -10,7 +16,14 @@ typedef struct G_GameSystem_t {
 	void* pointer58;
 	char pad5C[0x8];
 	int GameTimerWithSecond; // update once per second, that is a frame, is total time since game started.
+	char pad68[0x58];
+	pGameObjectNode* pGameObjectNode;
+	int GameObjectNodeCount;
 }*pG_GameSystem;
+#if 1
+static_assert(offsetof(G_GameSystem_t, pGameObjectNode) == 0xC0);
+#endif
+
 pG_GameSystem GS_GetGameSystemPointer();
 
 

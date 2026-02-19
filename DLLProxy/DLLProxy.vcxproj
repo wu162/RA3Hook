@@ -102,7 +102,9 @@
     <ClInclude Include="..\DllCore\commonStruct.hpp" />
     <ClInclude Include="..\DllCore\Core\1CallCore.hpp" />
     <ClInclude Include="..\DllCore\Core\C_AttributeModifier.h" />
+    <ClInclude Include="..\DllCore\Core\C_FXParticleSystem.h" />
     <ClInclude Include="..\DllCore\Core\C_GameObject.h" />
+    <ClInclude Include="..\DllCore\Core\C_Hotkey.h" />
     <ClInclude Include="..\DllCore\Core\C_Skirmish.h" />
     <ClInclude Include="..\DllCore\Core\C_Subsystem.h" />
     <ClInclude Include="..\DllCore\Core\C_System.h" />
@@ -118,7 +120,9 @@
     <ClInclude Include="..\DllCore\Modules\1CallModules.hpp" />
     <ClInclude Include="..\DllCore\Modules\M_BezierProjectile.h" />
     <ClInclude Include="..\DllCore\Modules\M_LaserState.h" />
+    <ClInclude Include="..\DllCore\Modules\M_ParkingPlaceBehavior.h" />
     <ClInclude Include="..\DllCore\Modules\M_PassiveAreaEffectBehavior.h" />
+    <ClInclude Include="..\DllCore\Modules\M_ProductionUpdate.h" />
     <ClInclude Include="..\DllCore\Modules\M_ShieldSphereUpdate.h" />
     <ClInclude Include="..\DllCore\utiliy.h" />
     <ClInclude Include="..\DllCore\utiliy_game.h" />
@@ -131,7 +135,9 @@
     <ClCompile Include="..\DllCore\Base\GlobalStructure.cpp" />
     <ClCompile Include="..\DllCore\commonMain.cpp" />
     <ClCompile Include="..\DllCore\Core\C_AttributeModifier.cpp" />
+    <ClCompile Include="..\DllCore\Core\C_FXParticleSystem.cpp" />
     <ClCompile Include="..\DllCore\Core\C_GameObject.cpp" />
+    <ClCompile Include="..\DllCore\Core\C_Hotkey.cpp" />
     <ClCompile Include="..\DllCore\Core\C_Skirmish.cpp" />
     <ClCompile Include="..\DllCore\Core\C_Subsystem.cpp" />
     <ClCompile Include="..\DllCore\Core\C_System.cpp" />
@@ -162,7 +168,9 @@
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NoListing</AssemblerOutput>
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NoListing</AssemblerOutput>
     </ClCompile>
+    <ClCompile Include="..\DllCore\Modules\M_ParkingPlaceBehavior.cpp" />
     <ClCompile Include="..\DllCore\Modules\M_PassiveAreaEffectBehavior.cpp" />
+    <ClCompile Include="..\DllCore\Modules\M_ProductionUpdate.cpp" />
     <ClCompile Include="..\DllCore\Modules\M_ShieldSphereUpdate.cpp">
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NoListing</AssemblerOutput>
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NoListing</AssemblerOutput>

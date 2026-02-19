@@ -20,7 +20,13 @@ typedef struct C_GameObject_t {
 	Matrix3D_t transform;
 	float Position[3];
 	float Orientation; // radian
-	char pad48[0x15C];
+	char pad48[0x94];
+	int CurrentID; // this is self serial number
+	void* pGameObjectE0; // maybe is previous?
+	int ProducerID;
+	char padE4[0xC];
+	void* pDrawable;
+	char padF8[0xAC];
 	float previous_Orientation, previous_Position[3];
 	Matrix3D_t previous_transform;
 	bool bNeedsTransformUpdate; // check saves current transformation
@@ -37,6 +43,9 @@ typedef struct C_GameObject_t {
 #if 1
 	static_assert(offsetof(C_GameObject_t, Position) == 0x38);
 	static_assert(offsetof(C_GameObject_t, Orientation) == 0x44);
+	static_assert(offsetof(C_GameObject_t, CurrentID) == 0xDC);
+	static_assert(offsetof(C_GameObject_t, ProducerID) == 0xE4);
+	static_assert(offsetof(C_GameObject_t, pDrawable) == 0xF4);
 	static_assert(offsetof(C_GameObject_t, previous_Orientation) == 0x1A4);
 	static_assert(offsetof(C_GameObject_t, previous_Position) == 0x1A8);
 	static_assert(offsetof(C_GameObject_t, previous_transform) == 0x1B4);
@@ -62,4 +71,6 @@ namespace RA3::Core {
 	float __fastcall C_GameObject_atanASM(Matrix3D_t* mat);
 
 	int __fastcall C_GameObject_SetFireAllowedStatusCPP(pC_ThingTemplate pIn);
+
+	bool __fastcall C_GameObject_CheckKindOfOnSelectionCPP(pC_ThingTemplate pIn);
 }

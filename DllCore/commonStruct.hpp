@@ -62,13 +62,19 @@ typedef struct Player_t {
 	unsigned char pad[0x10];
 	wchar_t* displayName;
 	char* inScriptName;
-	unsigned char pad22222[0x64];
+	char pad1C[4];
+	int PlayerID;
+	char pad24[0x5C];
 	U8Color_t color1;
 	U8Color_t color2;
 	U8Color_t color3;
+	char pad8c[0x1288];
+	int MaxAircraftCount, CurrentAircraftCount;
 } Player;
 static_assert(offsetof(Player_t, inScriptName) == 0x18);
+static_assert(offsetof(Player_t, PlayerID) == 0x20);
 static_assert(offsetof(Player_t, color1) == 0x80);
+static_assert(offsetof(Player_t, MaxAircraftCount) == 0x1314);
 
 typedef struct GameObject_t {
 	void* v_table;

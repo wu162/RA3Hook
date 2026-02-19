@@ -59,23 +59,6 @@ void __fastcall hookFunctionGroup()
 	// Synchronized rendering and logical frames?
 	WriteHookToProcess((void*)_F_SyncSet, (void*)&nop6, 6U);
 
-	// ra3_1.12.game+324085
-	// Up shift build count to 33!
-	/*
-	unsigned char ofs324085[] = {
-		0x6B, 0xFA, 0x20,            // imul edi, edx, 32
-		0x47,                        // inc edi
-		0x0F, 0x1F, 0x44, 0x00, 0x00 // nop
-	};*/
-	unsigned char ofs324085[]= {
-		0x8B, 0xCB, // mov ecx, ebx
-		0xE8, 0x00, 0x00, 0x00, 0x00, // call
-		0x8B, 0xF8	// mov edi, eax
-	};
-	int ofs324085_3 = (uintptr_t)BuildList_GetNewBuildCountASM - (_F_AddBuildListCount + 7);
-	memcpy(&ofs324085[3], &ofs324085_3, 4U);
-	WriteHookToProcess((void*)_F_AddBuildListCount, &ofs324085, 9U);
-
 	// Fix when AttachUpdate's Flags has FIND_BEST_PARENT
 	unsigned char set37AB71[] = {
 		0x83, 0xC4, 0x0C,       // add esp, 0xC
@@ -218,8 +201,6 @@ bool __fastcall GetFunctionAddress()
 		_F_BehaviorUpdate_TiberiumCrystal = hmodEXE + 0x305A26;
 		_Ret_BehaviorUpdate_TiberiumCrystal = hmodEXE + 0x305A26 + 5;
 
-		_F_AddBuildListCount = hmodEXE + 0x324085;
-
 		_F_SecondaryObjectListenerModuleSize = hmodEXE + 0x3DFF60+1;
 		_F_SecondaryObjectListenerModuleInit = hmodEXE + 0x2E4BC3;
 		_F_SecondaryObjectListenerModuleUpg = hmodEXE + 0x3B19E3;
@@ -273,7 +254,6 @@ bool __fastcall GetFunctionAddress()
 		_F_CallKillGameObject = hmodEXE + 0x3DCDF0;
 		_F_BehaviorUpdate_TiberiumCrystal = hmodEXE + 0x343E96;
 		_Ret_BehaviorUpdate_TiberiumCrystal = hmodEXE + 0x343E96 + 5;
-		_F_AddBuildListCount = hmodEXE + 0x362485;
 		_F_SecondaryObjectListenerModuleSize = hmodEXE + 0x41E280+1;
 		_F_SecondaryObjectListenerModuleInit = hmodEXE + 0x323033;
 		_F_SecondaryObjectListenerModuleUpg = hmodEXE + 0x3EFD03;
@@ -340,7 +320,7 @@ void mainInjectionExecution()
 		}
 
 		if (inputSetting.setDebug) {
-			MessageBox(NULL, L"Injection OK!\n   v2.507", L"Check", MB_OK);
+			MessageBox(NULL, L"Injection OK!\n   v2.6", L"Check", MB_OK);
 		}
 	}
 }

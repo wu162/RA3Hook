@@ -131,6 +131,18 @@
     <ClInclude Include="..\DllCore\Base\FileSystem.h">
       <Filter>Source Files\Base</Filter>
     </ClInclude>
+    <ClInclude Include="..\DllCore\Modules\M_ProductionUpdate.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DllCore\Core\C_Hotkey.h">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DllCore\Modules\M_ParkingPlaceBehavior.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DllCore\Core\C_FXParticleSystem.h">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -204,6 +216,18 @@
     </ClCompile>
     <ClCompile Include="..\DllCore\Base\FileSystem.cpp">
       <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DllCore\Modules\M_ProductionUpdate.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DllCore\Core\C_Hotkey.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DllCore\Modules\M_ParkingPlaceBehavior.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DllCore\Core\C_FXParticleSystem.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

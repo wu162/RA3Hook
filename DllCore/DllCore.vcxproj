@@ -99,7 +99,9 @@
     <ClInclude Include="commonStruct.hpp" />
     <ClInclude Include="Core\1CallCore.hpp" />
     <ClInclude Include="Core\C_AttributeModifier.h" />
+    <ClInclude Include="Core\C_FXParticleSystem.h" />
     <ClInclude Include="Core\C_GameObject.h" />
+    <ClInclude Include="Core\C_Hotkey.h" />
     <ClInclude Include="Core\C_Skirmish.h" />
     <ClInclude Include="Core\C_Subsystem.h" />
     <ClInclude Include="Core\C_System.h" />
@@ -117,7 +119,9 @@
     <ClInclude Include="Modules\M_AIUpdate.h" />
     <ClInclude Include="Modules\M_BezierProjectile.h" />
     <ClInclude Include="Modules\M_LaserState.h" />
+    <ClInclude Include="Modules\M_ParkingPlaceBehavior.h" />
     <ClInclude Include="Modules\M_PassiveAreaEffectBehavior.h" />
+    <ClInclude Include="Modules\M_ProductionUpdate.h" />
     <ClInclude Include="Modules\M_ShieldSphereUpdate.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="utiliy.h" />
@@ -128,9 +132,14 @@
     <ClCompile Include="Base\GlobalStructure.cpp" />
     <ClCompile Include="commonMain.cpp" />
     <ClCompile Include="Core\C_AttributeModifier.cpp" />
+    <ClCompile Include="Core\C_FXParticleSystem.cpp">
+      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NoListing</AssemblerOutput>
+      <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NoListing</AssemblerOutput>
+    </ClCompile>
     <ClCompile Include="Core\C_GameObject.cpp">
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NoListing</AssemblerOutput>
     </ClCompile>
+    <ClCompile Include="Core\C_Hotkey.cpp" />
     <ClCompile Include="Core\C_Skirmish.cpp" />
     <ClCompile Include="Core\C_Subsystem.cpp" />
     <ClCompile Include="Core\C_System.cpp" />
@@ -160,7 +169,9 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NoListing</AssemblerOutput>
     </ClCompile>
+    <ClCompile Include="Modules\M_ParkingPlaceBehavior.cpp" />
     <ClCompile Include="Modules\M_PassiveAreaEffectBehavior.cpp" />
+    <ClCompile Include="Modules\M_ProductionUpdate.cpp" />
     <ClCompile Include="Modules\M_ShieldSphereUpdate.cpp">
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NoListing</AssemblerOutput>
     </ClCompile>

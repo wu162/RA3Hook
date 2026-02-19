@@ -15,7 +15,6 @@ uintptr_t _F_KillTibCrystalWhenEmpty1 = 0;
 uintptr_t _F_KillTibCrystalWhenEmpty2 = 0;
 uintptr_t _F_BehaviorUpdate_TiberiumCrystal = 0;
 uintptr_t _Ret_BehaviorUpdate_TiberiumCrystal = 0;
-uintptr_t _F_AddBuildListCount = 0;
 // SecondaryObjectListenerModule
 uintptr_t _F_SecondaryObjectListenerModuleSize = 0x7DFF60;
 uintptr_t _F_SecondaryObjectListenerModuleInit = 0;

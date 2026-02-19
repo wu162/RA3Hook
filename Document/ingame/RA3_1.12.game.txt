@@ -50,6 +50,11 @@ ra3_1.12.game+1AE425 - FF D0                 - call eax
 ra3_1.12.game+18C022 
 检查对象是否存在？
 
+ra3_1.12.game+1AC298 - 8B 4E 08              - mov ecx,[esi+08]
+479号脚本， Set flash UI build ''AlliedScoutInfantry'' button to true.
+ra3_1.12.game+1AA5D0 - 8B 46 08              - mov eax,[esi+08]
+317号脚本，Store the number of 'AlliedAirfield' owned by Player 'Player_1' to 'tec'
+
 ================================================
 
 ra3_1.12.game+3E1970

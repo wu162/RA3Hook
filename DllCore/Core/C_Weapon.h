@@ -171,7 +171,7 @@ namespace RA3::Core {
 	void __fastcall C_Weapon_SetupPreAttackWeaponPosASM();
 
 	void __fastcall C_WeaponTemplate_SetAttackPositionASM();
-	void __fastcall C_WeaponTemplate_SetAttackPositionToRangeCPP(pC_WeaponTemplate pIn, PBYTE pESI, float* targetPos);
+	void __fastcall C_WeaponTemplate_SetAttackPositionToRangeCPP(pC_WeaponTemplate pIn, pWeaponFireInStack pFire, float* targetPos);
 
 	void __fastcall C_WeaponTemplate_FireNuggetsASM();
 	void __fastcall C_WeaponTemplate_FireNuggetsCPP(void* psp, pWeaponFireInStack pFire);

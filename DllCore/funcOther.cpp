@@ -98,37 +98,6 @@ __declspec(naked) void __fastcall BehaviorUpdate_TiberiumCrystal()
 	}
 }
 
-__declspec(naked) int32_t __fastcall BuildList_GetNewBuildCountASM(BuildList_Producer* pBuilder, int32_t shiftOn)
-{
-	/*
-	__asm {
-		mov eax, [esp]
-		mov [esp], esi
-		push eax
-		jmp BuildList_GetNewBuildCountCPP
-	}*/
-	__asm {
-		// check if is JapanWallPiece
-		cmp dword ptr[esi+8], 4173660217
-		je JapanWallCount
-		mov eax, edx
-		shl eax, 5 // to 32
-		inc eax
-		ret
-	JapanWallCount:
-		xor eax, eax
-		// increase production only if the list is empty.
-		cmp [ecx+0x10], eax
-		sete al
-		ret
-	}
-}
-
-int32_t __fastcall BuildList_GetNewBuildCountCPP(BuildList_Producer* pBuilder, int32_t shiftOn, uintptr_t* pObjectHash)
-{
-	return shiftOn*32 + 1;
-}
-
 __declspec(naked) void __fastcall SecondaryObjectListenerModule_Initialize()
 {
 	__asm {
@@ -248,42 +217,3 @@ __declspec(naked) uintptr_t* __cdecl sub_4169E0(size_t a1) {
         jmp ofs416720
     }
 }*/
-
-struct FXParticleSystemTemplate
-{
-	BYTE pad1[0x74];
-	void* shader;
-	int shaderTypeForComparison;
-};
-static_assert(offsetof(FXParticleSystemTemplate, shader) == 0x74);
-static_assert(offsetof(FXParticleSystemTemplate, shaderTypeForComparison) == 0x78);
-
-
-struct ValueNode
-{
-	ValueNode* nextNode;
-	ValueNode* previousNode;
-	void* item;
-};
-
-struct FXParticleSystemManager {
-	BYTE pad1[0x38];
-	ValueNode node;
-};
-static_assert(offsetof(FXParticleSystemManager, node) == 0x38);
-
-void __fastcall sub_006CAA60(FXParticleSystemManager* ecx, void* /* edx */, uintptr_t particleSystemRef) {
-	uintptr_t ofs2CAA61 = *(uintptr_t*)particleSystemRef;
-	uintptr_t ofs2CAA65 = *(uintptr_t*)ofs2CAA61;
-	uintptr_t ofs2CAA67 = *(uintptr_t*)ofs2CAA65;
-	// ebp, ecx
-	ValueNode* nextNode = ecx->node.nextNode;
-	// esi
-	ValueNode** nextNodeAddr = &ecx->node.nextNode;
-	FXParticleSystemTemplate* particleSystem = (FXParticleSystemTemplate*)(ofs2CAA67 + 8);
-	if (particleSystem->shader != 0) {
-		if ((uintptr_t)nextNode != (uintptr_t)nextNodeAddr) {
-			// 006CAA8E
-		}
-	}
-}

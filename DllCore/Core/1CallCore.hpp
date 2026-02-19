@@ -3,12 +3,14 @@
 #include "C_System.h"
 #include "C_Subsystem.h"
 #include "C_Skirmish.h"
+#include "C_Hotkey.h"
 
 #include "C_ThingTemplate.h"
 #include "C_GameObject.h"
 
 #include "C_AttributeModifier.h"
 #include "C_Weapon.h"
+#include "C_FXParticleSystem.h"
 
 namespace RA3::Core {
 
@@ -16,24 +18,30 @@ namespace RA3::Core {
 		C_System_Hook();
 		C_Subsystem_Hook();
 		C_Skirmish_Hook();
+		C_Hotkey_Hook();
 
 		C_ThingTemplate_Hook();
 		C_GameObject_Hook();
 
 		C_AttributeModifier_Hook();
 		C_Weapon_Hook();
+
+		//C_FXParticleSystem_Hook();
 	}
 
 	void __fastcall InitializeHookFunctionSeries_Core(uintptr_t hmodEXE, int isNewSteam) {
 		C_System_Initialize(hmodEXE, isNewSteam);
 		C_Subsystem_Initialize(hmodEXE, isNewSteam);
 		C_Skirmish_Initialize(hmodEXE, isNewSteam);
+		C_Hotkey_Initialize(hmodEXE, isNewSteam);
 
 		C_ThingTemplate_Initialize(hmodEXE, isNewSteam);
 		C_GameObject_Initialize(hmodEXE, isNewSteam);
 
 		C_AttributeModifier_Initialize(hmodEXE, isNewSteam);
 		C_Weapon_Initialize(hmodEXE, isNewSteam);
+
+		C_FXParticleSystem_Initialize(hmodEXE, isNewSteam);
 	}
 
 	// end namespace RA3::Core

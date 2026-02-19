@@ -15,6 +15,8 @@ namespace RA3::Core {
 	uintptr_t _F_UpdateGameObjectTransform = 0x7E3480;
 	uintptr_t _F_SetGameObjectFireAllowedStatus = 0x746358;
 
+	uintptr_t _F_GameObjectCheckKindOfOnSelection = 0xABA929;
+
 	void __fastcall C_GameObject_Hook()
 	{
 		int newGameObjectSize = 0x4FC + 4;
@@ -40,6 +42,16 @@ namespace RA3::Core {
 		WriteHookToProcess((void*)_F_SetGameObjectFireAllowedStatus, (void*)FireAllowedStatus, 8);
 		hookGameBlock((void*)(_F_SetGameObjectFireAllowedStatus + 8), (uintptr_t)C_GameObject_SetFireAllowedStatusCPP);
 		WriteHookToProcess((void*)(_F_SetGameObjectFireAllowedStatus + 8 + 5), (void*)&nop1, 1U);
+
+		// ============================================================================
+		hookGameCall((void*)_F_GameObjectCheckKindOfOnSelection, (uintptr_t)C_GameObject_CheckKindOfOnSelectionCPP);
+		BYTE checkSelection[] = {
+			0x5F,             // pop edi
+			0x5E,             // pop esi
+			0xC2, 0x04, 0x00, // ret 4
+			0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC
+		};
+		WriteHookToProcess((void*)(_F_GameObjectCheckKindOfOnSelection + 5), (void*)checkSelection, 13);
 	}
 
 	void __fastcall C_GameObject_Initialize(uintptr_t hmodEXE, int isNewSteam)
@@ -51,6 +63,7 @@ namespace RA3::Core {
 			_F_SetGameObjectPosition7E3D1B = 0x821FFB;
 			_F_UpdateGameObjectTransform = 0x821760;
 			_F_SetGameObjectFireAllowedStatus = 0x7848E8;
+			_F_GameObjectCheckKindOfOnSelection = hmodEXE + 0x64F569;
 		}
 	}
 
@@ -167,6 +180,19 @@ namespace RA3::Core {
 			} else {
 				return 0;
 			}
+		}
+
+		return 1;
+	}
+
+	bool __fastcall C_GameObject_CheckKindOfOnSelectionCPP(pC_ThingTemplate pIn)
+	{
+		if (pIn->KindOf[(int)KindOfType::FS_BASE_DEFENSE]) {
+			return 1;
+		}
+
+		if (pIn->KindOf[(int)KindOfType::STRUCTURE] || pIn->KindOf[(int)KindOfType::HARVESTER]) {
+			return 0;
 		}
 
 		return 1;

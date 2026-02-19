@@ -132,6 +132,18 @@
     <ClInclude Include="Base\FileSystem.h">
       <Filter>Source Files\Base</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\M_ProductionUpdate.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\C_Hotkey.h">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\M_ParkingPlaceBehavior.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\C_FXParticleSystem.h">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utiliy.cpp">
@@ -205,6 +217,18 @@
     </ClCompile>
     <ClCompile Include="Base\FileSystem.cpp">
       <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\M_ProductionUpdate.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\C_Hotkey.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\M_ParkingPlaceBehavior.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\C_FXParticleSystem.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

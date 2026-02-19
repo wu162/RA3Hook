@@ -24,6 +24,22 @@ __declspec(naked) void* __fastcall newMemoryAllocation(UINT32 size)
 	}
 }
 
+void* __cdecl GameMemoryAllocation(UINT32 size)
+{
+	typedef void*(__cdecl* callFunc)(UINT32 size);
+	auto fn = (callFunc)_F_ToMemoryAllocation;
+	return fn(size);
+}
+
+
+uintptr_t _F_ToMemoryFree = 0x416830;
+void __cdecl GameMemoryFree(void* p)
+{
+	typedef void (__cdecl* callFunc)(void* p);
+	auto fn = (callFunc)_F_ToMemoryFree;
+	return fn(p);
+}
+
 uintptr_t _F_SkirmishSettingsPointerCDBBE0 = 0xCDBBE0;
 uintptr_t _F_GameTextPointerCDB754 = 0xCDB754;
 uintptr_t _F_GameObjectHashCE6C58 = 0xCE6C58;
@@ -46,6 +62,7 @@ void __fastcall InitializeUtiliyGameFunctionsOrigin(uintptr_t hmodEXE)
 {
 	_F_CallRandomRadius = hmodEXE + 0x23F990;
 	_F_ToMemoryAllocation = 0x416740;
+	_F_ToMemoryFree = 0x416A00;
 	//
 	_F_SkirmishSettingsPointerCDBBE0 = 0xCE0D80;
 	_F_GameTextPointerCDB754 = 0xCE08F4;

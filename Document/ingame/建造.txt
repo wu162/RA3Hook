@@ -1,0 +1,307 @@
+ra3_1.12.game+324085
+设置单位建造数
+ebx是输入的ecx
+esi是pC_ThingTemplate
+
+==============
+ra3_1.12.game+F467A - E9 A6150000           - jmp ra3_1.12.game+F5C25
+返回值，shift是第2个参数，push eax
+
+ecx的虚表是00C3F8C8，是ProductionUpdate指针的+24
+虚表的+78和+84会在没有选择和进入建造页的时候一直被使用
++84是检查是否禁用建造
+
+ebx的虚表是00C4F458
+==============
+
+007896A0 初始化ProductionUpdate
+
+ra3_1.12.game+F467F - 6A 00                 - push 00
+这里是取消建造的分支
+
+ra3_1.12.game+2DA6B3 - 8B 40 30              - mov eax,[eax+30]
+读生产类型
+ra3_1.12.game+39DC19 - 89 44 24 14           - mov [esp+14],eax
+ra3_1.12.game+6A9AFF - 83 F8 FF              - cmp eax,-01 这里检查有没有生产列表
+ra3_1.12.game+6A9B60 - 8B F0                 - mov esi,eax
+放下建筑时读生产类型的返回
+ra3_1.12.game+6B7623 - 50                    - push eax
+生产单位时读生产类型的返回
+ra3_1.12.game+6B7414 - 50                    - push eax
+生产建筑时读生产类型的返回
+
+00AA9C94 这里为0则是没有更多的生产列表
+ra3_1.12.game+6A9B78 - 8B 54 24 3C           - mov edx,[esp+3C]
+从这里开始将生产列表推入ui
+
+00AB4AB8 - 8B 11  - mov edx,[ecx] 返回到ra3_1.12.game+6B7110，是用来获取生产数量
+00AB4AD9 - 8B 07  - mov eax,[edi] 用来获取生产进度
+00AB7141 - 8B 01  - mov eax,[ecx]
+00AB4BA9 - 8B 07  - mov eax,[edi]
+0054C7C7 - 8B 10  - mov edx,[eax]
+006F496A - 8B 13  - mov edx,[ebx]
+进入生产页面时读
+
+ra3_1.12.game+3170F0 - 8B 50 0C              - mov edx,[eax+0C]
+选中生产建筑
+ra3_1.12.game+317163 - 8B 01                 - mov eax,[ecx]
+取消选择
+ra3_1.12.game+3173AB - 8B 01                 - mov eax,[ecx]
+切换到生产页面，选中时会一直激活
+ra3_1.12.game+2DDDB3 - 8B 01                 - mov eax,[ecx]
+光标指向生产建筑
+
+00779253 - 8B 01  - mov eax,[ecx]
+008394A6 - 8B 50 0C  - mov edx,[eax+0C]
+更新生产列表时
+
+ra3_1.12.game+F45DE - 3B 04 8A              - cmp eax,[edx+ecx*4]
+这个eax指针中，+0是对象id，+4是对象指针，+8是下一个指针
+ra3_1.12.game+4A7B98 - 3B 38                 - cmp edi,[eax]
+这个地方可以获取上面的eax指针
+
+ra3_1.12.game+14C7C2 - 85 C0                 - test eax,eax
+点击页面从这里获取ProductionUpdate+24
+
+ra3_1.12.game+14C760 - 56                    - push esi
+进入生产页面时这里读
+ra3_1.12.game+6BBABE - 8B D8                 - mov ebx,eax
+返回到，是检查单位是否可以生产
+
+
+=======
+ra3_1.12.game+F461A - 88 44 24 14           - mov [esp+14],al
+这里写入shift按下
+00CE2FBC指针的+24指针的+1c的+24
+048133A0指针的+24写入的
+0060C4A0这里分配的+24指针，+c是0x205是00AB75DA这里call的
+
+ra3_1.12.game+200289 - 88 48 04              - mov [eax+04],cl
+实际上这里写的，从00AB7611 call的
+
+ra3_1.12.game+6BBB28 - 84 C0                 - test al,al
+实际上这里判断有没有shift，为0存在shift
+ra3_1.12.game+6BFCF2 - E8 19BEFFFF           - call ra3_1.12.game+6BBB10
+这里push的有shift
+
+ra3_1.12.game+6B72BE - 74 09                 - je ra3_1.12.game+6B72C9
+这里出的分支，为0则没有shift
+虚表是00BEBB00
+00CE927C的+34是功能键
+ra3_1.12.game+4758A0 - 83 4E 34 40           - or dword ptr [esi+34],40
+按下alt
+ra3_1.12.game+475A43 - 83 66 34 BF           - and dword ptr [esi+34],-41
+移除alt
+ra3_1.12.game+4758A6 - 81 4E 34 80000000     - or [esi+34],00000080
+按下右alt
+ra3_1.12.game+475888 - 83 4E 34 10           - or dword ptr [esi+34],10
+按下shift
+=======
+
+
+ra3_1.12.game+F23E0 
+建造指令的函数头部？
+
+ra3_1.12.game+32443D - 01 75 40              - add [ebp+40],esi
+生产完成时减少当前单位的计数
+
+ra3_1.12.game+2DA703 - 8B 49 1C              - mov ecx,[ecx+1C]
+生成时获取当前单位的计数
+
+ra3_1.12.game+3C23F1 - 8B 11                 - mov edx,[ecx]
+在gameobject初始化中的这个ecx是建造命令的指针
+
+ra3_1.12.game+30A0CC - 8B 88 E0000000        - mov ecx,[eax+000000E0]
+检查LIMITED_PRODUCTION_AIRCRAFT
+
+ra3_1.12.game+30F42E - F3 0F2C 46 1C         - cvttss2si eax,[esi+1C]
+将建造的百分比转换为整式
+ra3_1.12.game+6B4B1C - 89 44 24 0C           - mov [esp+0C],eax
+建造进度返回
+ra3_1.12.game+6B7131 - D9 5C 24 10           - fstp dword ptr [esp+10]
+接下来的返回
+
+ra3_1.12.game+2DA703 - 8B 49 1C              - mov ecx,[ecx+1C]
+读建造数量
+ra3_1.12.game+2F4976 - 84 C0                 - test al,al
+返回
+
+ra3_1.12.game+30F582 - F3 0F11 46 1C         - movss [esi+1C],xmm0
+写入建造进度
+
+ra3_1.12.game+2F4891 - F3 0F11 49 20         - movss [ecx+20],xmm1
++20功能？
+
+ra3_1.12.game+6B7092 - 74 5B                 - je ra3_1.12.game+6B70EF
+检查当前单位是否禁止建造，为0则可以建造
+ra3_1.12.game+6B7116 - 50                    - push eax
+这里显示生产数量，eax是生产数
+ra3_1.12.game+6B7182 - 0F2F C8               - comiss xmm1,xmm0
+这里显示生产进度
+
+ra3_1.12.game+17E1B1 - E8 AA92FFFF           - call ra3_1.12.game+177460
+设置单位建造闪烁，eax是thing指针，ecx是是否闪烁
+
+ra3_1.12.game+16D762 - 3B 50 04              - cmp edx,[eax+04]
+可能是兵营？
+
+
+
+==============
+ra3_1.12.game+2F491A - 8B 95 E0000000        - mov edx,[ebp+000000E0]
+这里检查LIMITED_PRODUCTION_AIRCRAFT可建造性
+ra3_1.12.game+14C7CF - 85 C0                 - test eax,eax
+返回地址，为0即可建造，ecx是ProductionUpdate+24
+
+ra3_1.12.game+2F4936 - 3B 91 14130000        - cmp edx,[ecx+00001314]
+检查当前机位和总机位的差距
+
+ra3_1.12.game+2F49A7 - 84 C0                 - test al,al
+当前机场有机位时为1
+ra3_1.12.game+2E3B60 - 56                    - push esi
+call的这个函数
+ra3_1.12.game+32CF50 - 83 EC 0C              - sub esp,0C
+这个函数返回最终结果，ebx的虚表是00C2F628，是ParkingPlaceBehavior+28
+
+00704410 初始化ParkingPlaceBehavior
+
+ra3_1.12.game+2E3AF0 - 8B 51 20              - mov edx,[ecx+20]
+增加LimitedProductionAircraftSpots到玩家总机位
+
+ra3_1.12.game+3F3901 - 50                    - push eax
+需要移除的对象id是这里push的
+ra3_1.12.game+363305 - 89 4E 34              - mov [esi+34],ecx
+这里将对象id从机位中移除
+
+ra3_1.12.game+3F38D4 - 8B 80 DC000000        - mov eax,[eax+000000DC]
+从这里开始是飞机起飞后离开机位
+
+ra3_1.12.game+2E3B45 - 83 78 34 00           - cmp dword ptr [eax+34],00
+进入机场时检查机位为空
+ra3_1.12.game+36303C - 89 7B 34              - mov [ebx+34],edi
+进入机场时写入对象id
+ra3_1.12.game+3637EF - 8B 44 24 68           - mov eax,[esp+68]
+进入机场时返回这里
+ra3_1.12.game+41EBBE - 84 C0                 - test al,al
+停进机场时返回这里
+
+ra3_1.12.game+412CB5 - E8 666AF2FF           - call ra3_1.12.game+339720
+返回的是ParkingPlaceBehavior+28的指针
+
+00762CB0 - C7 47 34 00000000 - mov [edi+34],00000000
+00763754 - C7 40 34 00000000 - mov [eax+34],00000000
+对象死亡使用的是这里移除
+
+ra3_1.12.game+2E3B18 - 39 50 34              - cmp [eax+34],edx
+进入有单位的机场时检查是不是同一个对象
+ra3_1.12.game+3B15A5 - 8B 43 34              - mov eax,[ebx+34]
+同样为进入有单位时的检查
+
+ra3_1.12.game+2E3C93 - 80 79 48 00           - cmp byte ptr [ecx+48],00
+检查机场的机位能不能使用，跟光标无关
+
+ra3_1.12.game+2E3CB3 - 39 78 34              - cmp [eax+34],edi
+一个飞机指向机场时
+
+ra3_1.12.game+3E2B3D - F3 0F59 40 08         - mulss xmm0,[eax+08]
+获取机位的高度，+34是机位中的对象id
+
+006FBA4E 这里用来检查这个对象的玩家是不是当前玩家
+
+ra3_1.12.game+3164FE - 8B 88 C0000000        - mov ecx,[eax+000000C0]
+检查对象是不是飞机，用来检查是否显示光标
+ra3_1.12.game+316517 - 8B 82 C4000000        - mov eax,[edx+000000C4]
+检查目标是不是机场
+ra3_1.12.game+31657C - 85 F6                 - test esi,esi
+这个esi和006F495C的esi是相同的指针
+
+ra3_1.12.game+2E3BBA - FF D2                 - call edx
+这里检查有没有空机位，返回的al为0就是没有机位
+
+==============
+ra3_1.12.game+3377C0 - 8B 44 24 08           - mov eax,[esp+08]
+ReturnToProducerSpecialPower初始化
+
+vft+5c
+ra3_1.12.game+36B840 - 8B 44 24 04           - mov eax,[esp+04]
+按f时激活
+
+==============
+
+ra3_1.12.game+359680 - 53                    - push ebx
+强制攻击，返回0不允许
+
+ra3_1.12.game+39A736 - 74 11                 - je ra3_1.12.game+39A749
+实际这里为0才允许检查强制攻击地面
+
+ra3_1.12.game+39A72A - 74 45                 - je ra3_1.12.game+39A771
+不为0时检查强制攻击
+
+ra3_1.12.game+3169CE - 85 C0                 - test eax,eax
+这里要求检查允许不允许强制攻击地面，为0则开始强制攻击检查
+ra3_1.12.game+68E06D 这里call，返回1就是不能强制攻击
+ra3_1.12.game+68D9C0 返回到
+
+00CE8C9C 本地玩家指针？
+
+ra3_1.12.game+6BDA09 - E8 22CEFDFF           - call ra3_1.12.game+69A830
+选择所有时，这里call请求按键？返回0则为可以操作
+
+ra3_1.12.game+5133B7 - 8B 56 04              - mov edx,[esi+04]
+这里是所有按键请求的返回
+
+00CAF810 按键时它会被读
+ra3_1.12.game+134CA0 - C7 05 10F8CA00 00000000 - mov [ra3_1.12.game+8AF810],00000000
+
+ra3_1.12.game+134F2A - 85 D2                 - test edx,edx
+edx是按键序号，q是0x10，这不是游戏的按键，游戏内按键返回的eax是0
+esc是0x1，左alt是0x38，右alt是0xB8
+
+ra3_1.12.game+52BBDF - C6 82 30020000 00     - mov byte ptr [edx+00000230],00
+左键按下时这里执行
+ra3_1.12.game+52BD3F - C6 82 30020000 00     - mov byte ptr [edx+00000230],00
+右键按下时这里执行
+
+ra3_1.12.game+FD958 - E8 F3513700           - call ra3_1.12.game+472B50
+uMsg等于0x104时
+ra3_1.12.game+1248 - 8B 7C 24 28           - mov edi,[esp+28]
+edi是uMsg，键盘按下时0x100
+
+ra3_1.12.game+168F - 8B 0D F8AECD00        - mov ecx,[ra3_1.12.game+8DAEF8]
+
+ra3_1.12.game+134E2A - 50                    - push eax
+这里的eax是按键序号
+ra3_1.12.game+134E18 - 8B 46 14              - mov eax,[esi+14]
+获取按键指针，指针的+14就是按键序号，虚表是00BECB48
++18是功能键序号，1是ctrl，2是alt，shift是4
+ra3_1.12.game+134D0A - C6 40 21 01           - mov byte ptr [eax+21],01
+写入按键按下
+ra3_1.12.game+134D8C - C6 40 21 00           - mov byte ptr [eax+21],00
+写入按键松开
+
+ra3_1.12.game+134C2B - C6 40 21 01           - mov byte ptr [eax+21],01
+含功能键的按键按下，将按下的索引写入00CAF80C，00CAF810也会被写入
+ra3_1.12.game+134BC4 - C6 40 21 00           - mov byte ptr [eax+21],00
+松开
+
+
+ra3_1.12.game+13496D - 89 4E 0C              - mov [esi+0C],ecx
+写入新的按键设置
+
+ra3_1.12.game+8AD814 就是路径点快捷键的指针，默认情况下
+
+================================
+ra3_1.12.game+134CC8 - 8D 04 D1              - lea eax,[ecx+edx*8]
+ecx是功能键序号，edx是按键序号
+
+ra3_1.12.game+4758C1 - 89 7C 24 0C           - mov [esp+0C],edi
+这里按下时写入按键序号，+10是功能键比特位1100是ctrl
+ra3_1.12.game+471E59 - FF D2                 - call edx
+是从这里call的，虚表是00BEBB00
+
+
+这个指针的+c是上面的指针，+10是按键序号，+14的bool是按下？
+虚表00C5D2E0
+ra3_1.12.game+FD958 
+这里初始化
+================================
