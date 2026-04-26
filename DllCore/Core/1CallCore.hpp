@@ -11,6 +11,7 @@
 #include "C_AttributeModifier.h"
 #include "C_Weapon.h"
 #include "C_FXParticleSystem.h"
+#include "C_ObjectCreationList.h"
 
 namespace RA3::Core {
 
@@ -27,6 +28,7 @@ namespace RA3::Core {
 		C_Weapon_Hook();
 
 		//C_FXParticleSystem_Hook();
+		C_ObjectCreationList_Hook();
 	}
 
 	void __fastcall InitializeHookFunctionSeries_Core(uintptr_t hmodEXE, int isNewSteam) {
@@ -42,6 +44,7 @@ namespace RA3::Core {
 		C_Weapon_Initialize(hmodEXE, isNewSteam);
 
 		C_FXParticleSystem_Initialize(hmodEXE, isNewSteam);
+		C_ObjectCreationList_Initialize(hmodEXE, isNewSteam);
 	}
 
 	// end namespace RA3::Core

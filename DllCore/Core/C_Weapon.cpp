@@ -102,20 +102,35 @@ namespace RA3::Core {
 	{
 		// esp need +4 because of esp has decreased by 4
 		__asm {
-			// ShowsAmmoPips is true
-			cmp byte ptr[edx + 0x134 - 0x10], 1 // Requires -10h, because it's not header.
-			lea edx, [esp + 0x10 + 4]
+			//mov eax, [esp + 0x10 + 4] // get PreAttackWeapon
+			mov edx, [eax + 4] // pData_WeaponTemplate
+			cmp byte ptr[edx + 0x134], 1 // ShowsAmmoPips is true.
 			jne addr79FB6E
 			test ecx, ecx
 			jz NoTarget // = 0
+			cmp byte ptr[edx + 0x126], 1 // IgnoresContactPoints
+			jne UseWeaponPos
+			lea eax, [ecx + 0x38] // target pos
 			xor ecx, ecx
+			jmp addr79FB75
+			//movq xmm0, qword ptr [ecx + 0x38] 
+			//movq qword ptr[esi + 0x4C], xmm0
+			//mov eax, [ecx + 0x38 + 8] // target pos
+			//mov [esi + 0x4C + 8], eax
+			//xorps xmm0, xmm0
+		UseWeaponPos:
 			lea eax, [esi + 0x4C] // FirePosInTarget
-			ret
+			xor ecx, ecx
+			jmp addr79FB75
 		NoTarget:
 			lea eax, [esi + 0x40] // FirePosNoTarget
-			ret
+			jmp addr79FB75
 		addr79FB6E:
 			lea eax, [edi + 0x38] // GameObject self pos
+		}
+	addr79FB75:
+		__asm {
+			lea edx, [esp + 0x10 + 4]
 			ret
 		}
 	}
@@ -403,10 +418,7 @@ namespace RA3::Core {
 		float targetScatter = 0;
 		if (pTarget) {
 			// 00713C06
-			auto TargetScatter = C_WeaponTemplate_GetTargetScatterRadiusVsType(pIn, 0, pTarget);
-			if (TargetScatter > 0) {
-				targetScatter = TargetScatter;
-			}
+			targetScatter = C_WeaponTemplate_GetTargetScatterRadiusVsType(pIn, 0, pTarget);
 		} else {
 			C_System_CheckPositionIsHitTerrain(0, 0, 0, pOutPos);
 		}

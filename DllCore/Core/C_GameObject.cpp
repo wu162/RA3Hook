@@ -17,6 +17,8 @@ namespace RA3::Core {
 
 	uintptr_t _F_GameObjectCheckKindOfOnSelection = 0xABA929;
 
+	uintptr_t _call_UpdateGameObjectProducerID = 0x6FB9B0;
+
 	void __fastcall C_GameObject_Hook()
 	{
 		int newGameObjectSize = 0x4FC + 4;
@@ -64,6 +66,8 @@ namespace RA3::Core {
 			_F_UpdateGameObjectTransform = 0x821760;
 			_F_SetGameObjectFireAllowedStatus = 0x7848E8;
 			_F_GameObjectCheckKindOfOnSelection = hmodEXE + 0x64F569;
+
+			_call_UpdateGameObjectProducerID = hmodEXE + 0x339DC0;
 		}
 	}
 
@@ -102,6 +106,7 @@ namespace RA3::Core {
 			// set pos to matrix
 			mov eax, [esp+0x48]
 			mov edx, [eax]
+			//mov ecx, [esp + 0x44+0x14] // get debug
 			mov [esi+0x14], edx
 			mov [esi+0x38], edx
 			mov ecx, [eax+4]
@@ -196,6 +201,13 @@ namespace RA3::Core {
 		}
 
 		return 1;
+	}
+
+	void __fastcall C_GameObject_UpdateGameObjectProducerID(pC_GameObject pIn, int useless, pC_GameObject pProducer)
+	{
+		typedef void(__fastcall* FuncType)(pC_GameObject pIn, int useless, pC_GameObject pProducer);
+		auto fnUpdateProducerID = (FuncType)_call_UpdateGameObjectProducerID;
+		fnUpdateProducerID(pIn, useless, pProducer);
 	}
 
 // end namespace RA3::Core

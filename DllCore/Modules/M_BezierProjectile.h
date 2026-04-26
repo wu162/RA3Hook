@@ -1,6 +1,28 @@
 #pragma once
 #include "../Base/CommonStructure.hpp"
 
+enum class BezierProjectileFlag : int {
+	TUMBLE_RANDOMLY,
+	DETONATE_CALLS_KILL,
+	ORIENT_TO_FLIGHT_PATH,
+	CRUSH_STYLE,
+	NO_DETONATE, // 4
+	DIE_ON_IMPACT,
+	IGNORE_TERRAIN_HEIGHT,
+	PING_PONG_SIDEWAYS_DRIFT,
+	ADJUST_STRAIGHT_ONLY,
+	DONT_DIE_ON_DETONATE,
+	DONT_SET_NO_ATTACK_STATUS,
+	DONT_TRACK_TARGET,
+	DETONATE_ON_APEX,
+	USE_ATTACHPOS_ON_VICTIM,
+	IGNORE_CONTACT_POINTS,
+	TARGET_OFFSET_ALONG_TARGET_VECTOR,
+	FIRE_STRAIGHT_THEN_CURVE,
+	DONT_DETONATE_WITHOUT_COLLISION,
+	all_count,
+};
+
 typedef struct M_BezierProjectile_t : baseCommonModule_t {
 	char pad24[0xC];
 	float posInBase[3]; // position of fire object
@@ -20,7 +42,7 @@ typedef struct M_BezierProjectile_t : baseCommonModule_t {
 // +D1 a byte now to check for ground collision
 
 typedef struct Data_BezierProjectile_t : baseBinDataHeader_t {
-	int Flags;
+	std::bitset<(size_t)BezierProjectileFlag::all_count>  Flags;
 	int Type;
 	char pad10[8];
 	float FireStraightDistance; // maybe
@@ -45,4 +67,6 @@ namespace RA3::Module {
 
 	void __fastcall M_BezierProjectile_CheckProjectilePositionASM();
 	void __fastcall M_BezierProjectile_CheckProjectilePositionCPP(pM_BezierProjectile pIn, void* pGO, float DefaultHeight);
+
+	void __fastcall M_BezierProjectile_AddToTheShieldSphereManagerASM();
 }

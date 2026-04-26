@@ -113,6 +113,36 @@ SkirmishStartCash的LoCash
 007B08DD BezierProjectile每帧的行为，ecx是模块指针，是模块+10的vft +0
 0077B8F8 比较加速度是否小于0
 
+
+ra3_1.12.game+F87C9 - F6 80 80000000 01     - test byte ptr [eax+00000080],01
+检查激活？eax是对象指针
+
+ra3_1.12.game+3D8AF9 - E8 02B20000           - call ra3_1.12.game+3E3D00
+跳跃激活时会进入这里，是每帧行为的分支
+
+ra3_1.12.game+3C36F1 - C1 EA 04              - shr edx,04
+这里可能是落地检查NO_DETONATE
+
+ra3_1.12.game+3B043F - 8B 43 08              - mov eax,[ebx+08]
+这里在跳跃中检查NO_DETONATE
+
+ra3_1.12.game+34594F - A1 E48CCD00           - mov eax,[ra3_1.12.game+8D8CE4]
+跳跃进护盾时会触发这里
+ra3_1.12.game+372E4D - E8 EE2AFDFF           - call ra3_1.12.game+345940
+是这里call的
+
+
+006291B9 TheShieldSphereManager的初始化，指针写入00CE587C
+ra3_1.12.game+3771E6 - 89 31                 - mov [ecx],esi
+这里写入对象id，和BezierProjectile+24，是从+670开始的
+ra3_1.12.game+3771CD - 89 97 F0120000        - mov [edi+000012F0],edx
+增加一个
+ra3_1.12.game+372F68 - 83 85 F0120000 FF     - add dword ptr [ebp+000012F0],-01
+减少一个
+
+
+================================================
+
 008E47A7 DynamicsUpdate初始化
 
 a0198e Dynamics碰撞检测系统
@@ -171,6 +201,9 @@ ShieldSphereUpdate数据
 007099BE 激活模块
 
 ra3_1.12.game+33ECE6 护盾受到伤害
+
+ra3_1.12.game+33EC3E - F6 81 88000000 01     - test byte ptr [ecx+00000088],01
+检查Options="ALLOW_ALLIES_PROJECTTILE_GOTHROUGH"
 
 0051CCB0 复制ModelConditionBitFlags
 

@@ -144,6 +144,9 @@
     <ClInclude Include="Core\C_FXParticleSystem.h">
       <Filter>Source Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\C_ObjectCreationList.h">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utiliy.cpp">
@@ -228,6 +231,9 @@
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Core\C_FXParticleSystem.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\C_ObjectCreationList.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>

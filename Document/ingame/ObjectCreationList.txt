@@ -1,0 +1,33 @@
+c - F3 0F10 06            - movss xmm0,[esi]
+FlingObject生成对象后更新它的信息，此处esp+90+10+c就是生产者对象指针+38
+
+ra3_1.12.game+33E518 - 8B 80 E4000000        - mov eax,[eax+000000E4]
+获取生产者id
+
+ra3_1.12.game+3799D9 - 55                    - push ebp
+这个ebp如果不为0则是对象指针+38，如下所示
+ra3_1.12.game+2DE3A1 - 8D 42 38              - lea eax,[edx+38]
+
+==========================================
+
+ra3_1.12.game+3C0B82 - 8B 4C 24 18           - mov ecx,[esp+18]
+CreateObject生成对象后的返回地址
+
+ra3_1.12.game+2FB9F2 - 89 86 E4000000        - mov [esi+000000E4],eax
+为对象写入生产者id
+
+==========================================
+ra3_1.12.game+304190 - 8B 44 24 08           - mov eax,[esp+08]
+NotifyWhenAttackingBehavior 初始化
+
+ra3_1.12.game+3C4407 - 8B 5D F8              - mov ebx,[ebp-08]
+获取对象指针
+
+ra3_1.12.game+31C65C - 8B 77 08              - mov esi,[edi+08]
+ra3_1.12.game+31C7B1 - 8B 57 08              - mov edx,[edi+08]
+攻击时触发这两个
+
+ra3_1.12.game+3C448E - 38 56 60              - cmp [esi+60],dl
+这个地方要检查flag，所以需要让它总是为1
+ra3_1.12.game+3C4502 - 88 55 31              - mov [ebp+31],dl
+这里写入的这个flag

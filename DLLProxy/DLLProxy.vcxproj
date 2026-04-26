@@ -21,13 +21,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -105,6 +105,7 @@
     <ClInclude Include="..\DllCore\Core\C_FXParticleSystem.h" />
     <ClInclude Include="..\DllCore\Core\C_GameObject.h" />
     <ClInclude Include="..\DllCore\Core\C_Hotkey.h" />
+    <ClInclude Include="..\DllCore\Core\C_ObjectCreationList.h" />
     <ClInclude Include="..\DllCore\Core\C_Skirmish.h" />
     <ClInclude Include="..\DllCore\Core\C_Subsystem.h" />
     <ClInclude Include="..\DllCore\Core\C_System.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="..\DllCore\Core\C_FXParticleSystem.cpp" />
     <ClCompile Include="..\DllCore\Core\C_GameObject.cpp" />
     <ClCompile Include="..\DllCore\Core\C_Hotkey.cpp" />
+    <ClCompile Include="..\DllCore\Core\C_ObjectCreationList.cpp" />
     <ClCompile Include="..\DllCore\Core\C_Skirmish.cpp" />
     <ClCompile Include="..\DllCore\Core\C_Subsystem.cpp" />
     <ClCompile Include="..\DllCore\Core\C_System.cpp" />

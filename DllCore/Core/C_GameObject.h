@@ -73,4 +73,5 @@ namespace RA3::Core {
 	int __fastcall C_GameObject_SetFireAllowedStatusCPP(pC_ThingTemplate pIn);
 
 	bool __fastcall C_GameObject_CheckKindOfOnSelectionCPP(pC_ThingTemplate pIn);
+	void __fastcall C_GameObject_UpdateGameObjectProducerID(pC_GameObject pIn, int useless, pC_GameObject pProducer);
 }

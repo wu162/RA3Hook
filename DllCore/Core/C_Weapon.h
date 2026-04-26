@@ -118,6 +118,7 @@ typedef struct Data_WeaponTemplate_t {
 	static_assert(offsetof(Data_WeaponTemplate_t, Flags) == 0xAC);
 	static_assert(offsetof(Data_WeaponTemplate_t, AutoReloadsClip) == 0xB8);
 	static_assert(offsetof(Data_WeaponTemplate_t, ScatterIndependently) == 0x124);
+	static_assert(offsetof(Data_WeaponTemplate_t, IgnoresContactPoints) == 0x126);
 	static_assert(offsetof(Data_WeaponTemplate_t, DamageDealtAtSelfPosition) == 0x12C);
 	static_assert(offsetof(Data_WeaponTemplate_t, ShowsAmmoPips) == 0x134);
 	static_assert(offsetof(Data_WeaponTemplate_t, IsAimingWeapon) == 0x137);

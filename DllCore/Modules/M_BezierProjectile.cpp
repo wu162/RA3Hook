@@ -26,6 +26,9 @@ namespace RA3::Module {
 	// it has 4 functions.
 	uintptr_t _VFT_module_BezierProjectileNew[4];
 
+	//
+	uintptr_t _F_BezierProjectile_AddToTheShieldSphereManager = 0x7771B8;
+
 	void __fastcall M_BezierProjectile_Hook()
 	{
 		_call_BezierProjectileModule00 = *(int_fastcallNoParameter*)(_F_BezierProjectileVFT_M);
@@ -38,6 +41,10 @@ namespace RA3::Module {
 
 		hookGameBlock((void*)_F_BezierProjectile_CheckProjectilePosition, (uintptr_t)M_BezierProjectile_CheckProjectilePositionASM);
 		WriteHookToProcess((void*)(_F_BezierProjectile_CheckProjectilePosition + 5), (void*)&nop2, 2U);
+
+		// prevent jumping object to be deflected by shield
+		hookGameBlock((void*)_F_BezierProjectile_AddToTheShieldSphereManager, (uintptr_t)M_BezierProjectile_AddToTheShieldSphereManagerASM);
+		WriteHookToProcess((void*)(_F_BezierProjectile_AddToTheShieldSphereManager + 5), (void*)&nop1, 1U);
 	}
 
 	void __fastcall M_BezierProjectile_Initialize(uintptr_t hmodEXE, int isNewSteam)
@@ -46,6 +53,7 @@ namespace RA3::Module {
 			_F_BezierProjectileInitialize = 0x789B3C;
 			_F_BezierProjectile_CheckProjectilePosition = 0x71F3B2;
 			_F_BezierProjectileVFT_M = 0xC3E828;
+			_F_BezierProjectile_AddToTheShieldSphereManager = hmodEXE + 0x3B5678;
 		}
 	}
 
@@ -236,6 +244,47 @@ namespace RA3::Module {
 
 		pGameObject->Position[2] = DefaultHeight;
 		pGameObject->transform.z = DefaultHeight;
+	}
+
+	__declspec(naked) void __fastcall M_BezierProjectile_AddToTheShieldSphereManagerASM()
+	{
+		// First, check flag
+		__asm{
+			mov ebx, eax
+			mov ecx, [eax - 0x24 + 4] // get module data pointer
+			mov eax, [ecx+8] // get flags
+			test eax, 1 << 4 // NO_DETONATE
+			jnz ToReturn
+		}
+
+		// check list size
+		__asm {
+			mov ecx, [edi + 0x12F0]
+			cmp ecx, 0x190
+			jae ToReturn
+			lea edx, [ecx + 1]
+			mov [edi + 0x12F0], edx
+			lea ecx, [edi + ecx * 8 + 0x670]
+			lea edx, [esp + 0x1C]
+			cmp ecx, edx
+			je ToReturn
+		}
+
+		// write to list
+		__asm {
+			mov [ecx], esi
+			mov[ecx+4], ebx
+		}
+
+	ToReturn:
+		__asm {
+			pop esi
+			pop edi
+			pop ebp
+			pop ebx
+			add esp, 0xE0
+			ret 4
+		}
 	}
 
 // end namespace RA3::Module
